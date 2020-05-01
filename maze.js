@@ -2,7 +2,8 @@ var cols, rows;
 var w = 40;
 var grid = [];
 function setup() {
-    createCanvas(400, 400);
+    var myCanvas = createCanvas(400, 400);
+    myCanvas.parent("canvas");
     cols = floor(width / w);
     rows = floor(height / w);
 
@@ -20,6 +21,7 @@ function draw() {
         grid[i].show();
     }
 }
+
 
 function Cell(x, y) {
     this.x = x;
@@ -49,10 +51,30 @@ function Cell(x, y) {
             //left
             line(x, y + w, x, y)
         }
-
-
-
         //noFill();
         //rect(x,y,w,w)
     }
 }
+
+
+this.readText = function (evt) {
+    event.preventDefault();
+    var input = document.querySelector("#fileUp")
+    const reader = new FileReader();
+    reader.readAsText(input.files[0])
+    reader.onload = function () {
+        const lines = reader.result.split('\n')
+        console.log(lines)
+        drawMap(lines)
+    }
+}
+
+drawMap = function (map) {
+    for (var i = 0; i < map.length; i++) {
+        if (i % 2 == 0) {
+            console.log(map[i])
+        }
+    }
+}
+
+
